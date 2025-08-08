@@ -47,11 +47,11 @@ export const deleteFile = async (req, res) => {
     'SELECT path FROM files WHERE id = ? AND user_id = ?',
     [id, req.user.id]
   );
-  if (!rows.length) return res.status(404).send('File not found');
+  if (!rows.length) return res.status(404).send('Không tìm thấy file');
 
   fs.unlinkSync(rows[0].path);
   await db.execute('DELETE FROM files WHERE id = ?', [id]);
-  res.send('File deleted');
+  res.send('File đã được xóa thành công');
 };
 
 // 4. Download file by id
@@ -64,7 +64,7 @@ export const downloadFile = async (req, res) => {
     WHERE f.id = ? AND f.user_id = ?`,
     [id, req.user.id]
   );
-  if (!rows.length) return res.status(404).send('File or key not found');
+  if (!rows.length) return res.status(404).send('Không tìm thấy file hoặc key');
 
   const decryptedPath = `${rows[0].path}.dec`;
   await decryptFile(rows[0].path, decryptedPath, rows[0].key_value);

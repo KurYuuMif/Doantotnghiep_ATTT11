@@ -18,22 +18,33 @@ export default function UploadFile() {
     formData.append('file', file);
     formData.append('keyId', keyId);
     await uploadFile(formData, token);
-    alert('File uploaded & encrypted');
+    alert('File đã được tải lên và mã hóa thành công!');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 max-w-md mx-auto">
-      <h1 className="text-xl mb-4">Upload & Encrypt File</h1>
-      <input type="file" onChange={(e) => setFile(e.target.files[0])} className="w-full mb-2" required />
-      <select onChange={(e) => setKeyId(e.target.value)} className="w-full mb-2" required>
+    <form onSubmit={handleSubmit} className="p-4">
+      <h1 className="text-xl font-bold mb-4">Upload & Mã hóa File</h1>
+      <input 
+        type="file" 
+        onChange={(e) => setFile(e.target.files[0])} 
+        className="w-full mb-2" 
+        required 
+        cursor="pointer"
+      />
+      <select
+        onChange={(e) => setKeyId(e.target.value)}
+        className="w-80 mb-2 px-2 py-1 border rounded cursor-pointer"
+        required
+      >
         <option value="">Select Key</option>
         {keys.map((k, index) => (
-        <option key={k.key_id || index} value={k.key_id}>
-          {k.key_name || `Key ${index}`}
-        </option>
-))}
+          <option key={k.key_id || index} value={k.key_id}>
+            {k.key_name || `Key ${index}`}
+          </option>
+        ))}
       </select>
-      <button type="submit" className="bg-blue-500 px-4 py-2 text-white">Upload</button>
+
+      <button type="submit" className="bg-blue-500 px-4 py-2 rounded text-white">Upload</button>
     </form>
   );
 }

@@ -18,7 +18,4 @@ export const deleteKey = (keyId, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
-// export const deleteKey = (keyId, token) => 
-//   axios.delete(`${API}/keys/${keyId}`, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
+

@@ -22,10 +22,10 @@ export const createKey = async (req, res) => {
       'INSERT INTO ckeys (user_id, key_name, key_value) VALUES (?, ?, ?)',
       [userId, key_name, key_value]
     );
-    res.status(201).send('Key created');
+    res.status(201).send('Tạo khóa thành công');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Database error');
+    res.status(500).send('Lỗi database');
   }
 };
 
@@ -49,13 +49,13 @@ export const deleteKey = async (req, res) => {
 
   try {
     const [rows] = await db.execute('SELECT key_name, key_value FROM ckeys WHERE key_id = ? AND user_id = ?', [keyId, userId]);
-    if (!rows.length) return res.status(404).send('Key not found');
+    if (!rows.length) return res.status(404).send('Không tìm thấy key');
 
     await db.execute('DELETE FROM ckeys WHERE key_id = ? AND user_id = ?', [keyId, userId]);
-    res.send('Key deleted');
+    res.send('Key đã được xóa thành công');
 
   } catch (error) {
     console.error(error);
-    res.status(500).send('Database error');
+    res.status(500).send('Lỗi database');
   }
 }

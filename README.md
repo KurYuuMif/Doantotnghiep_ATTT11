@@ -18,5 +18,7 @@ Thuật toán RRPBA (Reduced-Round Permutation-Based AES)
 - Kết hợp với XOR và sử dụng precomputed results để tăng tính ngẫu nhiên và tốc độ.
 - Vẫn dùng chế độ Cipher Block Chaining (CBC) như AES.
 
-Back http://localhost:3000 - Front http://localhost:3001
-cd frontend > npm start - cd backend  > node index.js
+Back http://localhost:3000
+Front http://localhost:3001
+cd frontend > npm start
+cd backend  > node index.js
