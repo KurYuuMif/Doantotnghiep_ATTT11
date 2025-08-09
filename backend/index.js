@@ -14,7 +14,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -24,4 +25,4 @@ app.use('/auth', authRoutes);
 app.use('/files', fileRoutes);
 app.use('/keys', keyRoutes);
 
-app.listen(PORT,'0.0.0.0', () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
