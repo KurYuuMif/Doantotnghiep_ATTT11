@@ -2,7 +2,7 @@ import axios from 'axios';
 const API = process.env.REACT_APP_API_URL + '/files';
 
 export const uploadFile = (formData, token) => {
-  return axios.post(`${API}/files/upload`, formData, {
+  return axios.post(`${API}/upload`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data'
