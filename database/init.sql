@@ -1,3 +1,9 @@
+CREATE TABLE `users` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE,
+    password VARCHAR(255)
+);
+
 CREATE TABLE `ckeys` (
   `key_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
