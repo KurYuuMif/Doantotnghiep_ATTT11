@@ -16,6 +16,7 @@ export default function Home() {
     <li><strong>File upload:</strong> Multer</li>
     <li><strong>Quản lí biến môi trường:</strong> dotenv</li>
     <li><strong>Database:</strong> MySQL</li>
+    <li><strong>Public website:</strong> Railway.com</li>
   </ul>
 
   <h2 className="text-xl font-semibold mt-4">
