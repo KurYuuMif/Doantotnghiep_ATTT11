@@ -28,7 +28,7 @@ export default function KeyManager() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-2 sm:p-4 overflow-x-auto">
       <h1 className="text-xl font-bold mb-4">Quản lí khóa</h1>
 
       <div className="mb-6 flex gap-2">
@@ -47,7 +47,7 @@ export default function KeyManager() {
         </button>
       </div>
 
-      <table className="min-w-full bg-white border border-gray-300 rounded shadow">
+      <table className="min-w-full bg-white border border-gray-300 rounded shadow text-xs sm:text-sm">
         <thead>
           <tr className="bg-gray-100 border-b">
             <th className="px-4 py-2 text-left">Tên khóa</th>

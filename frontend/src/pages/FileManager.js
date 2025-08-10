@@ -34,10 +34,10 @@ export default function FileManager() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Quản lí file</h1>
+    <div className="p-2 sm:p-4 overflow-x-auto">
+      <h1 className="text-xl font-bold mb-4">Quản lí file</h1>  
 
-      <table className="min-w-full bg-white border border-gray-300 rounded shadow">
+      <table className="min-w-full bg-white border border-gray-300 rounded shadow text-xs sm:text-sm">
         <thead>
           <tr className="bg-gray-100 border-b">
             <th className="px-4 py-2 text-left">Tên file</th>
