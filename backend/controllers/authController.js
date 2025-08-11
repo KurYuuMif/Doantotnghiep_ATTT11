@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../models/db.js';
+import { getDB } from '../models/db.js';
 
 export const register = async (req, res) => {
+  const db = getDB();
   const { username, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
   await db.execute('INSERT INTO users (username, password_hash) VALUES (?, ?)', [username, hash]);
@@ -10,6 +11,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  const db = getDB();
   const { username, password } = req.body;
   const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
   if (!rows.length || !(await bcrypt.compare(password, rows[0].password_hash))) {

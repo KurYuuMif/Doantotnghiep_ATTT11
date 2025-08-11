@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import { db } from '../models/db.js';
+import { getDB } from '../models/db.js';
 import { encryptFile } from '../services/encryptFile.js';
 import { decryptFile } from '../services/decryptFile.js';
 const uploadDir = path.resolve('uploads');
 
-// 1. Upload file
 export const uploadFile = async (req, res) => {
+  const db = getDB();
   const { keyId } = req.body;
   const file = req.file;
 
@@ -28,20 +28,20 @@ export const uploadFile = async (req, res) => {
   res.status(201).send('✅ File uploaded and encrypted');
 };
 
-// 2. Get user's file list
 export const getUserFiles = async (req, res) => {
+  const db = getDB();
   const [rows] = await db.execute(
-  `SELECT f.id, f.filename, k.key_name 
-  FROM files f 
-  LEFT JOIN ckeys k ON f.key_id = k.key_id 
-  WHERE f.user_id = ?`,
-  [req.user.id]
+    `SELECT f.id, f.filename, k.key_name 
+     FROM files f 
+     LEFT JOIN ckeys k ON f.key_id = k.key_id 
+     WHERE f.user_id = ?`,
+    [req.user.id]
   );
   res.json(rows);
 };
 
-// 3. Delete file by id
 export const deleteFile = async (req, res) => {
+  const db = getDB();
   const id = req.params.id;
   const [rows] = await db.execute(
     'SELECT path FROM files WHERE id = ? AND user_id = ?',
@@ -54,14 +54,14 @@ export const deleteFile = async (req, res) => {
   res.send('File đã được xóa thành công');
 };
 
-// 4. Download file by id
 export const downloadFile = async (req, res) => {
+  const db = getDB();
   const id = req.params.id;
   const [rows] = await db.execute(
     `SELECT f.filename, f.path, k.key_value 
-    FROM files f 
-    JOIN ckeys k ON f.key_id = k.key_id 
-    WHERE f.id = ? AND f.user_id = ?`,
+     FROM files f 
+     JOIN ckeys k ON f.key_id = k.key_id 
+     WHERE f.id = ? AND f.user_id = ?`,
     [id, req.user.id]
   );
   if (!rows.length) return res.status(404).send('Không tìm thấy file hoặc key');
