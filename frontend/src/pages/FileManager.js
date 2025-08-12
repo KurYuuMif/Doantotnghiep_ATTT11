@@ -17,6 +17,7 @@ export default function FileManager() {
   const handleDelete = async (id) => {
     await deleteFile(id, token);
     fetchFiles();
+    alert('✅ File đã được xóa thành công!');
   };
 
   const handleDownload = async (id, name, keyDeleted) => {

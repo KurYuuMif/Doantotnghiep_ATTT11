@@ -20,11 +20,13 @@ export default function KeyManager() {
     await createKey(keyName, token);
     setKeyName('');
     fetchKeys();
+    alert('✅ Key đã được tạo thành công!');
   };
 
   const handleDelete = async (keyId) => {
     await deleteKey(keyId, token);
     fetchKeys();
+    alert('✅ Key đã được xóa thành công!');
   };
 
   return (
