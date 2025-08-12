@@ -18,20 +18,32 @@ export const uploadFile = async (req, res) => {
 
   const key = keyRows[0].key_value;
   const encryptedPath = `${uploadDir}/${file.filename}.enc`;
+
+  const originalSize = fs.statSync(file.path).size; // bytes
+  const startTime = Date.now();
+
   await encryptFile(file.path, encryptedPath, key);
 
+  const encryptionTime = ((Date.now() - startTime) / 1000).toFixed(2); // giây
+
   await db.execute(
-    'INSERT INTO files (filename, path, user_id, key_id) VALUES (?, ?, ?, ?)',
-    [file.originalname, encryptedPath, req.user.id, keyId]
+    'INSERT INTO files (filename, path, user_id, key_id, time, size) VALUES (?, ?, ?, ?, ?, ?)',
+    [file.originalname, encryptedPath, req.user.id, keyId, encryptionTime, originalSize]
   );
   fs.unlinkSync(file.path);
-  res.status(201).send('✅ File uploaded and encrypted');
+
+  res.status(201).json({
+    message: '✅ File uploaded and encrypted',
+    size: originalSize,
+    encryptionTime: encryptionTime
+  });
 };
+
 
 export const getUserFiles = async (req, res) => {
   const db = getDB();
   const [rows] = await db.execute(
-    `SELECT f.id, f.filename, k.key_name 
+    `SELECT f.id, f.filename, k.key_name, f.time, f.size
      FROM files f 
      LEFT JOIN ckeys k ON f.key_id = k.key_id 
      WHERE f.user_id = ?`,
@@ -67,6 +79,14 @@ export const downloadFile = async (req, res) => {
   if (!rows.length) return res.status(404).send('Không tìm thấy file hoặc key');
 
   const decryptedPath = `${rows[0].path}.dec`;
+
+  const startTime = Date.now();
+
   await decryptFile(rows[0].path, decryptedPath, rows[0].key_value);
+
+  const decryptionTime = ((Date.now() - startTime) / 1000).toFixed(2);
+
+  res.setHeader('X-Decryption-Time', decryptionTime);
+
   res.download(decryptedPath, rows[0].filename, () => fs.unlinkSync(decryptedPath));
 };

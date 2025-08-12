@@ -26,6 +26,8 @@ CREATE TABLE `files` (
   `filename` VARCHAR(255) NOT NULL,
   `path` VARCHAR(100) DEFAULT NULL,
   `uploaded_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `time` INT default NULL,
+  `size` INT default NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 );

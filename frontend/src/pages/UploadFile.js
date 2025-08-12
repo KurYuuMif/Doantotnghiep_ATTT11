@@ -17,10 +17,15 @@ export default function UploadFile() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('keyId', keyId);
-    await uploadFile(formData, token);
-    alert('File đã được tải lên và mã hóa thành công!');
-  };
 
+    const res = await uploadFile(formData, token);
+    const { size, encryptionTime } = res.data;
+
+    alert(`✅ File đã được tải lên và mã hóa thành công!
+  📂 Dung lượng: ${(size / 1024).toFixed(2)} KB
+  ⏱ Thời gian mã hóa: ${encryptionTime} giây`);
+  };
+  
   return (
     <form onSubmit={handleSubmit} className="p-4">
       <h1 className="text-xl font-bold mb-4">Upload & Mã hóa File</h1>

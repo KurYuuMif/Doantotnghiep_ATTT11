@@ -11,6 +11,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await register(form);
+    alert('✅ Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
     navigate('/login');
   };
   

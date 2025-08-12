@@ -16,6 +16,7 @@ export default function Login() {
     localStorage.setItem('token', res.data.token);
     setUser(res.data.user);
     navigate('/dashboard');
+    alert(`✅ Đăng nhập thành công! Chào mừng ${res.data.user.username}`);
   };
   const styles = {
   container: {
