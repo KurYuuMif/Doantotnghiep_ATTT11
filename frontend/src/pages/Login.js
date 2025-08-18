@@ -11,17 +11,28 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  try {
     const res = await login(form);
-    if (res.status !== 200) {
-      alert('❌ Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin đăng nhập.');
-      return;
+
+    if (res.data && res.data.token) {
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.user);
+      navigate('/dashboard');
+      alert(`✅ Đăng nhập thành công! Chào mừng ${res.data.user.username}`);
+    } else {
+      alert("❌ Đăng nhập thất bại. Vui lòng kiểm tra lại tài khoản và mật khẩu.");
     }
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.user);
-    navigate('/dashboard');
-    alert(`✅ Đăng nhập thành công! Chào mừng ${res.data.user.username}`);
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+
+    if (error.response && error.response.data && error.response.data.message) {
+      alert(`❌ ${error.response.data.message}`);
+    } else {
+      alert("❌ Đăng nhập thất bại. Sai tài khoản hoặc mật khẩu.");
+    }
+  }
+};
   const styles = {
   container: {
     width: '300px',

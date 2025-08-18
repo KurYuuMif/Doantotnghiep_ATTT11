@@ -27,7 +27,7 @@ CREATE TABLE `files` (
   `path` VARCHAR(100) DEFAULT NULL,
   `uploaded_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `time` INT default NULL,
-  `size` INT default NULL,
+  `size` FLOAT default NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 );
