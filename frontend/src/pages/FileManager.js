@@ -48,8 +48,8 @@ export default function FileManager() {
           <tr className="bg-gray-100 border-b">
             <th className="px-4 py-2 text-left">Tên file</th>
             <th className="px-4 py-2 text-left">Tên khóa dùng để mã hóa</th>
-            <th className="px-4 py-2 text-center">Kích thước</th>
-            <th className="px-4 py-2 text-center">Thời gian mã hóa</th>
+            <th className="px-4 py-2 text-left">Kích thước (MB)</th>
+            <th className="px-4 py-2 text-left">Thời gian mã hóa(giây)</th>
             <th className="px-4 py-2 text-center">Hành động</th>
           </tr>
         </thead>
@@ -61,8 +61,8 @@ export default function FileManager() {
                 <tr key={f.id} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-2">{f.filename}</td>
                   <td className="px-4 py-2 font-mono">{f.key_name || "❌ [Key đã bị xóa]"}</td>
-                  <td className="px-4 py-2 font-mono">{f.size}</td>
-                  <td className="px-4 py-2 font-mono">{f.time}</td>
+                  <td className="px-4 py-2 font-mono">{f.size} MB</td>
+                  <td className="px-4 py-2 font-mono">{f.time} s</td>
                   <td className="px-4 py-2 text-center flex justify-center gap-2">
                     <button
                       onClick={() => handleDownload(f.id, f.filename, isKeyDeleted)}

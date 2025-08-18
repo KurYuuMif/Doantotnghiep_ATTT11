@@ -20,22 +20,22 @@ export const uploadFile = async (req, res) => {
   const encryptedPath = `${uploadDir}/${file.filename}.enc`;
 
   const originalSize = fs.statSync(file.path).size; // bytes
+  const sizeInMB = (originalSize / (1024 * 1024)).toFixed(2); //bytes to MB
+
   const startTime = Date.now();
-
   await encryptFile(file.path, encryptedPath, key);
-
   const encryptionTime = ((Date.now() - startTime) / 1000).toFixed(2); // giây
 
   await db.execute(
     'INSERT INTO files (filename, path, user_id, key_id, time, size) VALUES (?, ?, ?, ?, ?, ?)',
-    [file.originalname, encryptedPath, req.user.id, keyId, encryptionTime, originalSize]
+    [file.originalname, encryptedPath, req.user.id, keyId, encryptionTime, sizeInMB]
   );
   fs.unlinkSync(file.path);
 
   res.status(201).json({
-    message: '✅ File uploaded and encrypted',
-    size: originalSize,
-    encryptionTime: encryptionTime
+    message: '✅ File đã được tải lên và mã hóa thành công!',
+    size: sizeInMB + ' MB',
+    encryptionTime: encryptionTime + ' giây'
   });
 };
 
