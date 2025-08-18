@@ -22,7 +22,7 @@ export default function UploadFile() {
     const { size, encryptionTime } = res.data;
 
     alert(`✅ File đã được tải lên và mã hóa thành công!
-  📂 Dung lượng: ${size} MB
+  📂 Dung lượng: ${size.toFixed(2)} KB
   ⏱ Thời gian mã hóa: ${encryptionTime}`);
   };
   
