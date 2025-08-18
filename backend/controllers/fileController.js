@@ -19,8 +19,8 @@ export const uploadFile = async (req, res) => {
   const key = keyRows[0].key_value;
   const encryptedPath = `${uploadDir}/${file.filename}.enc`;
 
-  const originalSize = fs.statSync(file.path).size; // bytes
-  const sizeInMB = (originalSize / (1024 * 1024)).toFixed(2); //bytes to MB
+  const originalSize = fs.statSync(file.path); // bytes
+  const sizeInMB = ((originalSize / (1024 * 1024)).toFixed(2)).size; //bytes to MB
 
   const startTime = Date.now();
   await encryptFile(file.path, encryptedPath, key);

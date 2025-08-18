@@ -19,11 +19,11 @@ export default function UploadFile() {
     formData.append('keyId', keyId);
 
     const res = await uploadFile(formData, token);
-    const { sizeInMB, encryptionTime } = res.data;
+    const { size, encryptionTime } = res.data;
 
     alert(`✅ File đã được tải lên và mã hóa thành công!
-  📂 Dung lượng: ${sizeInMB} MB
-  ⏱ Thời gian mã hóa: ${encryptionTime} giây`);
+  📂 Dung lượng: ${size} MB
+  ⏱ Thời gian mã hóa: ${encryptionTime}`);
   };
   
   return (
