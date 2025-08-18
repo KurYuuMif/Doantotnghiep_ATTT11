@@ -13,6 +13,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await login(form);
+    if (res.status !== 200) {
+      alert('❌ Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin đăng nhập.');
+      return;
+    }
     localStorage.setItem('token', res.data.token);
     setUser(res.data.user);
     navigate('/dashboard');
