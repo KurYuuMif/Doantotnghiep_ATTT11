@@ -84,7 +84,7 @@ export const downloadFile = async (req, res) => {
 
   await decryptFile(rows[0].path, decryptedPath, rows[0].key_value);
 
-  const decryptionTime = ((Date.now() - startTime) / 1000).toFixed(2);
+  const decryptionTime = ((Date.now() - startTime) / 1000).toFixed(5);
 
   res.setHeader('X-Decryption-Time', decryptionTime);
 
