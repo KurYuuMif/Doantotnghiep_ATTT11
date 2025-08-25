@@ -20,11 +20,11 @@ export const uploadFile = async (req, res) => {
   const encryptedPath = `${uploadDir}/${file.filename}.enc`;
 
   const originalSize = fs.statSync(file.path).size; // byte
-  const sizeInKB = (originalSize / 1024).toFixed(2); // KB
+  const sizeInKB = (originalSize / 1024).toFixed(5); // KB
 
   const startTime = Date.now();
   await encryptFile(file.path, encryptedPath, key);
-  const encryptionTime = ((Date.now() - startTime) / 1000).toFixed(2); // giây
+  const encryptionTime = ((Date.now() - startTime) / 1000).toFixed(5); // giây
 
   await db.execute(
     'INSERT INTO files (filename, path, user_id, key_id, time, size) VALUES (?, ?, ?, ?, ?, ?)',
