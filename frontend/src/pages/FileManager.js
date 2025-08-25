@@ -61,8 +61,8 @@ export default function FileManager() {
                 <tr key={f.id} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-2">{f.filename}</td>
                   <td className="px-4 py-2 font-mono">{f.key_name || "❌ [Key đã bị xóa]"}</td>
-                  <td className="px-4 py-2 font-mono">{f.size} KB</td>
-                  <td className="px-4 py-2 font-mono">{f.time} s</td>
+                  <td className="px-4 py-2 font-mono">{Number(f.size).toFixed(5)} KB</td>
+                  <td className="px-4 py-2 font-mono">{Number(f.time).toFixed(5)} s</td>
                   <td className="px-4 py-2 text-center flex justify-center gap-2">
                     <button
                       onClick={() => handleDownload(f.id, f.filename, isKeyDeleted)}
