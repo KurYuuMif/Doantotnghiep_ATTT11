@@ -60,7 +60,7 @@ export default function Register() {
       <form onSubmit={handleSubmit}>
         <div className="flex items-center">
           <FaUser className="text-gray-500 mr-2" />
-          <label htmlFor="username">Tên đăng nhập:</label>
+          <label htmlFor="username">Tên đăng ký:</label>
         </div>
 
         <input 
