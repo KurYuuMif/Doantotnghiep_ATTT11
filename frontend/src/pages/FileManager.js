@@ -36,7 +36,7 @@ export default function FileManager() {
   link.click();
 
   alert(`✅ File đã được giải mã và tải về thành công!
-  ⏱ Thời gian giải mã: ${decryptionTime} giây`);
+  ⏱ Thời gian giải mã: ${decryptionTime || 'N/A'} giây`);
   };
 
   return (
