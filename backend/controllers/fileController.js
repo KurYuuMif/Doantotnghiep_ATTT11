@@ -69,6 +69,7 @@ export const deleteFile = async (req, res) => {
 export const downloadFile = async (req, res) => {
   const db = getDB();
   const id = req.params.id;
+
   const [rows] = await db.execute(
     `SELECT f.filename, f.path, k.key_value 
      FROM files f 
@@ -76,18 +77,25 @@ export const downloadFile = async (req, res) => {
      WHERE f.id = ? AND f.user_id = ?`,
     [id, req.user.id]
   );
+
   if (!rows.length) return res.status(404).send('Không tìm thấy file hoặc key');
 
   const decryptedPath = `${rows[0].path}.dec`;
-
   const startTime = Date.now();
 
   await decryptFile(rows[0].path, decryptedPath, rows[0].key_value);
 
   const decryptionTime = ((Date.now() - startTime) / 1000).toFixed(5);
-  
-  res.setHeader('X-Decryption-Time', decryptionTime);
-  res.setHeader('X-Decryption-Time', decryptionTime);
 
-  res.download(decryptedPath, rows[0].filename, () => fs.unlinkSync(decryptedPath));
+  res.setHeader('X-Decryption-Time', decryptionTime);
+  res.setHeader('Access-Control-Expose-Headers', 'X-Decryption-Time');
+  res.setHeader('Content-Disposition', `attachment; filename="${rows[0].filename}"`);
+  res.setHeader('Content-Type', 'application/octet-stream');
+
+  const filestream = fs.createReadStream(decryptedPath);
+  filestream.pipe(res);
+
+  filestream.on('close', () => {
+    fs.unlinkSync(decryptedPath);
+  });
 };
