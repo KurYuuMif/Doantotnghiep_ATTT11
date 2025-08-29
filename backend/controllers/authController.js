@@ -5,6 +5,10 @@ import { getDB } from '../models/db.js';
 export const register = async (req, res) => {
   const db = getDB();
   const { username, password } = req.body;
+  const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
+  if (rows.length > 0) {
+    return res.status(400).send('❌ Tên đăng nhập đã tồn tại, vui lòng chọn tên khác');
+  }
   const hash = await bcrypt.hash(password, 10);
   await db.execute('INSERT INTO users (username, password_hash) VALUES (?, ?)', [username, hash]);
   res.status(201).send('Đăng ký thành công');

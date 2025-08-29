@@ -5,14 +5,27 @@ import { FaUser, FaKey, FaUserCircle } from 'react-icons/fa';
 
 export default function Register() {
   const [form, setForm] = useState({ username: '', password: '' });
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(form);
-    alert('✅ Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
-    navigate('/login');
+    if (form.password !== confirmPassword) {
+      alert('❌ Mật khẩu nhập lại không khớp!');
+      return;
+    }
+    try {
+      await register(form);
+      alert('✅ Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
+      navigate('/login');
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data); // ❌ hiển thị "Tên đăng nhập đã tồn tại"
+        } else {
+          alert('❌ Có lỗi xảy ra khi đăng ký, vui lòng thử lại!');
+        }
+    }
   };
   
   const styles = {
@@ -83,6 +96,20 @@ export default function Register() {
           placeholder="Nhập mật khẩu" 
           value={form.password} 
           onChange={(e) => setForm({ ...form, password: e.target.value })} 
+          style={styles.input}
+        />
+
+        <div className="flex items-center">
+          <FaKey className="text-gray-500 mr-2" />
+          <label htmlFor="confirmPassword">Nhập lại mật khẩu:</label>
+        </div>
+        <input 
+          type={showPassword ? 'text' : 'password'}
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="Nhập lại mật khẩu" 
+          value={confirmPassword} 
+          onChange={(e) => setConfirmPassword(e.target.value)} 
           style={styles.input}
         />
 
